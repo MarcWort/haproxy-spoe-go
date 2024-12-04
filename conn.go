@@ -44,7 +44,7 @@ func (c *conn) run(a *Agent) error {
 		return fmt.Errorf("unexpected frame type %x when initializing connection", myframe.ftype)
 	}
 
-	myframe, capabilities, healcheck, err := c.handleHello(myframe)
+	myframe, capabilities, _, err := c.handleHello(myframe)
 	if err != nil {
 		return err
 	}
@@ -98,9 +98,6 @@ func (c *conn) run(a *Agent) error {
 	err = cod.encodeFrame(myframe)
 	if err != nil {
 		return err
-	}
-	if healcheck {
-		return nil
 	}
 
 	// run reply loop
